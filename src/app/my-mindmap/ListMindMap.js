@@ -10,70 +10,32 @@ import { FiPlusCircle } from 'react-icons/fi';
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import Loading from '~/components/Loading';
 import ModalConfirmDelete from '~/components/ModalConfirmDelete';
+import { postMindmap } from '~/services/mindmap';
 
 const api = process.env.NEXT_PUBLIC_API;
 
 function ListMindMap() {
   const [user, setUser] = useState('');
+  const [fetchApi, setFetchApi] = useState('');
   const [loading, setLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const { mutate } = useSWRConfig();
   console.log('loading post', loading);
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')));
-  }, []);
+    setFetchApi(`${api}/mindmaps?user_id=${user?.sub}`);
+  }, [user.sub]);
+
   const router = useRouter();
-  const {
-    data: mindmaps,
-    error,
-    isLoading,
-    mutate,
-  } = useSWR(`${api}/mindmaps?user_id=${user?.sub}`, fetcher);
-  console.log('mindmaps', mindmaps);
-  // if (isLoading)
-  //   return (
-  //     <div>
-  //       <Loading />
-  //     </div>
-  //   );
+  const { data: mindmaps, error, isLoading } = useSWR(fetchApi, fetcher);
+  console.log('mindmaps up: ', mindmaps);
   const id_mindmap = nanoid();
-  const deleteMindmap = async (id) => {
-    try {
-      const data = await fetch(`${api}/mindmaps/${id}`, {
-        method: 'DELETE',
-      });
-      mutate(mindmaps);
-      console.log(data);
-      if (data.ok) {
-        toast.success('Delete success!');
-      } else {
-        toast.error('Some thing went wrong!');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const postMindmap = async (dataMindmap) => {
-    try {
-      const response = await fetch(`${api}/mindmaps`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataMindmap),
-      });
-      mutate(mindmaps);
-      return response.json();
-    } catch (error) {
-      console.log(error);
-    } finally {
-    }
-  };
   const handleCreateMindmap = async () => {
-    const data = {
+    const dataPost = {
       id: id_mindmap,
       user_id: user?.sub,
       user: user,
@@ -93,12 +55,15 @@ function ListMindMap() {
     };
     try {
       setLoading(true);
-      const dataMap = await postMindmap(data);
-      console.log('dataMap', dataMap);
-      if (dataMap && !loading && !isLoading) {
-        // redirect(`/my-mindmap/${dataMap.id}`);
-        router.push(`/my-mindmap/${dataMap.id}`);
+      const res = await postMindmap(dataPost);
+      const { response, data } = res;
+      if (response.ok) {
+        console.log('fetchApi', fetchApi);
+        mutate(fetchApi);
+        // router.push(`/my-mindmap/${data.id}`);
       }
+      console.log('responsePostData: ', response);
+      console.log('dataPostData: ', data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -132,40 +97,45 @@ function ListMindMap() {
           </tr>
         </thead>
         <tbody>
-          {mindmaps &&
-            !loading &&
-            mindmaps?.map((m, i) => (
-              <tr key={i}>
-                <td className="w-[70%] border border-gray p-2">
-                  <h2 className="text-xl">{m.title} </h2>
-                  <p className="font-thin">{m.desc}</p>
-                </td>
-                <td className="p-2 border border-gray">{m.created_at}</td>
-                <td className="p-2 border border-gray">
-                  <span className="font-medium text-[#FC427B] block text-center">
-                    {+m.status === 0 ? 'Private' : 'Public'}
-                  </span>
-                </td>
-                <td className="p-2 border border-gray">
-                  <Link
-                    href={`/my-mindmap/${m.id}`}
-                    className="inline-block ml-2"
-                  >
-                    <FaEdit fontSize={'1.6rem'} />
-                  </Link>
-                  <button className="ml-4" onClick={() => setShowConfirm(true)}>
-                    <MdDelete fontSize={'1.6rem'} />
-                  </button>
-                  {showConfirm && (
-                    <ModalConfirmDelete
-                      onDelete={deleteMindmap}
-                      id={m.id}
-                      onShowConfirm={setShowConfirm}
-                    />
-                  )}
-                </td>
-              </tr>
-            ))}
+          {typeof mindmaps === 'object' &&
+          Object.keys(mindmaps).length &&
+          !loading
+            ? mindmaps?.map((m, i) => (
+                <tr key={i}>
+                  <td className="w-[70%] border border-gray p-2">
+                    <h2 className="text-xl">{m.title} </h2>
+                    <p className="font-thin">{m.desc}</p>
+                  </td>
+                  <td className="p-2 border border-gray">{m.created_at}</td>
+                  <td className="p-2 border border-gray">
+                    <span className="font-medium text-[#FC427B] block text-center">
+                      {+m.status === 0 ? 'Private' : 'Public'}
+                    </span>
+                  </td>
+                  <td className="p-2 border border-gray">
+                    <Link
+                      href={`/my-mindmap/${m.id}`}
+                      className="inline-block ml-2"
+                    >
+                      <FaEdit fontSize={'1.6rem'} />
+                    </Link>
+                    <button
+                      className="ml-4"
+                      onClick={() => setShowConfirm(true)}
+                    >
+                      <MdDelete fontSize={'1.6rem'} />
+                    </button>
+                    {showConfirm && (
+                      <ModalConfirmDelete
+                        id={m.id}
+                        fetchApi={fetchApi}
+                        onShowConfirm={setShowConfirm}
+                      />
+                    )}
+                  </td>
+                </tr>
+              ))
+            : null}
         </tbody>
       </table>
     </>

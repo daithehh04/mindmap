@@ -14,13 +14,17 @@ import ModalShare from '~/components/ModalShare';
 import Link from 'next/link';
 import Avatar from '~/components/Avatar';
 import NotFound from '~/app/not-found';
+import { updateMindmap } from '~/services/mindmap';
 const api = process.env.NEXT_PUBLIC_API;
 
 function Detail({ id }) {
   const { user } = useUser();
   const [show, setShow] = useState(false);
   const { dataMindmap } = useDataMindmap();
-  const { data, error, isLoading } = useSWR(`${api}/mindmaps/${id}`, fetcher);
+  const { data, error, isLoading, mutate } = useSWR(
+    `${api}/mindmaps/${id}`,
+    fetcher
+  );
   const checkUser = data?.user_id === user?.sub;
   const status = data?.status;
   const titleRef = useRef('');
@@ -32,32 +36,19 @@ function Detail({ id }) {
   useEffect(() => {
     document.title = titleRef.current;
   }, [titleRef, data]);
-  if (JSON.stringify(data) === '{}') {
+  if (typeof data === 'object' && Object.keys(data).length === 0) {
     return <NotFound />;
   }
-  const updateMindmap = async (data) => {
-    try {
-      const response = await fetch(`${api}/mindmaps/${id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      return response.json();
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const handleUpdate = async () => {
     const dataUpdate = {
       ...dataMindmap,
       title: titleRef.current,
       desc: descRef.current,
     };
-    const data = await updateMindmap(dataUpdate);
-    if (data) {
+    const { response, data } = await updateMindmap(dataUpdate);
+    if (response.ok) {
       toast.success('Update success!');
+      console.log('dataUpdate: ', data);
     } else {
       toast.error('Some thing went wrong!');
     }

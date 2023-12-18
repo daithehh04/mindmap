@@ -1,13 +1,27 @@
+'use client';
+import toast from 'react-hot-toast';
 import { IoWarningOutline } from 'react-icons/io5';
-function ModalConfirmDelete({ onDelete, onShowConfirm, id }) {
+import { useSWRConfig } from 'swr';
+import { deleteMindmap } from '~/services/mindmap';
+function ModalConfirmDelete({ onShowConfirm, id, fetchApi }) {
+  const { mutate } = useSWRConfig();
   const handleDelete = async () => {
-    await onDelete(id);
-    onShowConfirm(false);
+    try {
+      const response = await deleteMindmap(id);
+      if (response?.ok) {
+        mutate(fetchApi);
+        toast.success('delete mindmap success!');
+      }
+      onShowConfirm(false);
+    } catch (error) {
+      console.log(error);
+      toast.error('delete failed!');
+    }
   };
   return (
     <div
       className="fixed inset-0 h-[100vh] w-full !z-50"
-      style={{ background: 'rgba(17,24,39,0.8)' }}
+      style={{ background: 'rgba(17,24,39,0.6)' }}
     >
       <div className="bg-[#fff] !z-[51] absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 p-8 rounded-xl">
         <div className="flex items-center gap-4 !opacity-100 text-black">

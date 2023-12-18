@@ -1,7 +1,7 @@
 function Loading() {
   return (
     <div className="flex items-center justify-center h-full">
-      <div class="loader text-center" />
+      <div className="text-center loader" />
     </div>
   );
 }
