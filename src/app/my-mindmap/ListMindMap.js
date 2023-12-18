@@ -110,6 +110,7 @@ function ListMindMap() {
           <tr className="text-xl bg-blue1">
             <th className="p-4 text-left border border-gray">Tên</th>
             <th className="p-4 text-left border border-gray">Tạo lúc</th>
+            <th className="p-4 text-left border border-gray">Status</th>
             <th className="p-4 text-left border border-gray">Hành động</th>
           </tr>
         </thead>
@@ -118,10 +119,15 @@ function ListMindMap() {
             mindmaps?.map((m, i) => (
               <tr key={i}>
                 <td className="w-[70%] border border-gray p-2">
-                  <h2 className="text-xl">{m.title}</h2>
+                  <h2 className="text-xl">{m.title} </h2>
                   <p className="font-thin">{m.desc}</p>
                 </td>
                 <td className="p-2 border border-gray">{m.created_at}</td>
+                <td className="p-2 border border-gray">
+                  <span className="font-medium text-[#FC427B] block text-center">
+                    {+m.status === 0 ? 'Private' : 'Public'}
+                  </span>
+                </td>
                 <td className="p-2 border border-gray">
                   <Link
                     href={`/my-mindmap/${m.id}`}
