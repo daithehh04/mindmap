@@ -110,7 +110,7 @@ function ListMindMap() {
           <tr className="text-xl bg-blue1">
             <th className="p-4 text-left border border-gray">Tên</th>
             <th className="p-4 text-left border border-gray">Tạo lúc</th>
-            <th className="p-4 text-left border border-gray">Status</th>
+            <th className="p-4 text-left border border-gray">Trạng thái</th>
             <th className="p-4 text-left border border-gray">Hành động</th>
           </tr>
         </thead>
