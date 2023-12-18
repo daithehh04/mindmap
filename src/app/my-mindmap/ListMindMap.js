@@ -10,29 +10,18 @@ import { FiPlusCircle } from 'react-icons/fi';
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import Loading from '~/components/Loading';
+import ModalConfirmDelete from '~/components/ModalConfirmDelete';
 
 const api = process.env.NEXT_PUBLIC_API;
 
-const postMindmap = async (dataMindmap) => {
-  try {
-    const response = await fetch(`${api}/mindmaps`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(dataMindmap),
-    });
-    return response.json();
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 function ListMindMap() {
   const [user, setUser] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  console.log('loading post', loading);
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')));
   }, []);
@@ -44,12 +33,12 @@ function ListMindMap() {
     mutate,
   } = useSWR(`${api}/mindmaps?user_id=${user?.sub}`, fetcher);
   console.log('mindmaps', mindmaps);
-  if (isLoading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
+  // if (isLoading)
+  //   return (
+  //     <div>
+  //       <Loading />
+  //     </div>
+  //   );
   const id_mindmap = nanoid();
   const deleteMindmap = async (id) => {
     try {
@@ -67,7 +56,23 @@ function ListMindMap() {
       console.log(error);
     }
   };
-  const handlePostMindmap = async () => {
+  const postMindmap = async (dataMindmap) => {
+    try {
+      const response = await fetch(`${api}/mindmaps`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataMindmap),
+      });
+      mutate(mindmaps);
+      return response.json();
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
+  };
+  const handleCreateMindmap = async () => {
     const data = {
       id: id_mindmap,
       user_id: user?.sub,
@@ -86,20 +91,32 @@ function ListMindMap() {
       ],
       edges: [],
     };
-    mutate(mindmaps);
-    const dataMap = await postMindmap(data);
-    console.log(dataMap);
-    if (dataMap) {
-      router.push(`/my-mindmap/${dataMap.id}`);
-    } else {
-      toast.error('Some thing went wrong !');
+    try {
+      setLoading(true);
+      const dataMap = await postMindmap(data);
+      console.log('dataMap', dataMap);
+      if (dataMap && !loading && !isLoading) {
+        // redirect(`/my-mindmap/${dataMap.id}`);
+        router.push(`/my-mindmap/${dataMap.id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
+  if (loading || isLoading) {
+    return (
+      <div className="flex min-h-[20vh] items-center justify-center ">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <>
       <button
-        onClick={handlePostMindmap}
+        onClick={handleCreateMindmap}
         className="px-8 mt-4 mb-12 flex gap-1 w-max items-center btn-primary py-3 !rounded-lg"
       >
         <FiPlusCircle />
@@ -116,6 +133,7 @@ function ListMindMap() {
         </thead>
         <tbody>
           {mindmaps &&
+            !loading &&
             mindmaps?.map((m, i) => (
               <tr key={i}>
                 <td className="w-[70%] border border-gray p-2">
@@ -135,9 +153,16 @@ function ListMindMap() {
                   >
                     <FaEdit fontSize={'1.6rem'} />
                   </Link>
-                  <button className="ml-4" onClick={() => deleteMindmap(m.id)}>
+                  <button className="ml-4" onClick={() => setShowConfirm(true)}>
                     <MdDelete fontSize={'1.6rem'} />
                   </button>
+                  {showConfirm && (
+                    <ModalConfirmDelete
+                      onDelete={deleteMindmap}
+                      id={m.id}
+                      onShowConfirm={setShowConfirm}
+                    />
+                  )}
                 </td>
               </tr>
             ))}
