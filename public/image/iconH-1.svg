@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="87" height="48" viewBox="0 0 87 48">
+  <g fill="none" fill-rule="evenodd" transform="translate(-55 -20)">
+    <g stroke-linecap="round" stroke-linejoin="round" stroke-width="10" transform="translate(89.18 25)">
+      <path stroke="#FA0" d="M0,18.2962963 C26.2931004,18.2962963 23.52,0 47.04,0"/>
+      <path stroke="#FFD426" d="M0,38 C26.2931004,38 26.313,19.7037037 47.04,19.7037037" transform="matrix(1 0 0 -1 0 57.704)"/>
+    </g>
+    <g stroke-linecap="round" stroke-linejoin="round" stroke-width="10" transform="translate(60.76 25)">
+      <path stroke="#4070FF" d="M0,38 C26.2931004,38 23.52,19.7037037 47.04,19.7037037" transform="rotate(180 23.52 28.852)"/>
+      <path stroke="#2BD9D9" d="M0,18.2962963 C26.2931004,18.2962963 26.313,0 47.04,0" transform="matrix(-1 0 0 1 47.04 0)"/>
+    </g>
+    <path fill="#FFF" d="M94.4,28 L101.6,28 C110.436556,28 117.6,35.163444 117.6,44 C117.6,52.836556 110.436556,60 101.6,60 L94.4,60 C85.563444,60 78.4,52.836556 78.4,44 C78.4,35.163444 85.563444,28 94.4,28 Z"/>
+    <path fill="#8A9499" d="M94.2,38 L101.8,38 C105.113708,38 107.8,40.6862915 107.8,44 C107.8,47.3137085 105.113708,50 101.8,50 L94.2,50 C90.8862915,50 88.2,47.3137085 88.2,44 C88.2,40.6862915 90.8862915,38 94.2,38 Z" opacity=".3"/>
+  </g>
+</svg>

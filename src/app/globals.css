@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-weight: 500;
+  font-size: 17px;
+  overflow-x: hidden;
+}
+
+.content {
+  max-width: 1170px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 25px;
+}
+
+.header.active {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.nav-link {
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #00aaff;
+  box-shadow: 0 10px 30px -10px #00aaff;
+  color: white;
+  border-radius: 99px;
+  min-height: 40px;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary {
+  background-color: #f9578d;
+  box-shadow: 0 10px 30px -10px #f9578d;
+  color: white;
+  min-height: 40px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0498e1;
+}
+.btn-secondary:hover {
+  background-color: #f63e7b;
+}
+
+.home .banner {
+  background: url('../../public/image/banner-home.svg') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+}
+.heading-1 {
+  font-size: 80px;
+  line-height: 1;
+  font-weight: bold;
+  color: #3d474d;
+}
+.heading-2 {
+  font-size: 32px;
+  color: #3d474d80;
+  font-weight: 500;
+}
+
+.list-features {
+  background: url('../../public/image/bg-features.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 350px;
+}
+
+/* text-updater-node */
+.text-updater-node {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #f9578d;
+  border-radius: 4px;
+  font-size: 12px;
+  min-width: 150px;
+}
+
+.text-updater-node.clicked {
+  outline: 0.5px solid #f9578d;
+  border-color: #f9578d;
+}
+
+.node-item {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.node-item input {
+  outline: none;
+  border: 1px solid #ccc;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  height: 20px;
+  width: 130px;
+}
+
+/* AddNodeOnEdgeDrop */
+.react-flow .react-flow__handle {
+  width: 28px;
+  height: 12px;
+  border-radius: 3px;
+  background-color: #00aaff;
+}
+
+.react-flow .react-flow__handle-top {
+  top: -6px;
+}
+
+.react-flow .react-flow__handle-bottom {
+  bottom: -6px;
+}
+/* 
+.react-flow .react-flow__node {
+  height: 40px;
+  width: 150px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-width: 2px;
+  font-weight: 700;
+} */
+
+.react-flow .react-flow__edge path,
+.react-flow__connectionline path {
+  stroke-width: 1.5;
+  stroke: #00aaff;
+}
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: red !important;
+}
+.wrapper {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.react-flow__node-input {
+  border-width: 1.5px !important;
+  border-color: #f9578d !important;
+}
+.react-flow__node-input.selectable.selected,
+.react-flow__node-input.selectable:focus {
+  box-shadow: none !important;
+}
+
+/* custom radio */
+input[type='radio'] + label span {
+  transition: background 0.2s, transform 0.2s;
+}
+
+input[type='radio'] + label span:hover,
+input[type='radio'] + label:hover span {
+  transform: scale(1.2);
+}
+
+input[type='radio']:checked + label span {
+  background-color: #3490dc;
+  box-shadow: 0px 0px 0px 2px white inset;
+}
+
+input[type='radio']:checked + label {
+  color: #3490dc;
+}
+
+.mode:has([type='radio']#radio1:checked) ~ .public {
+  display: none;
+}
+.mode:has([type='radio']#radio2:checked) ~ .private {
+  display: none;
+}
+
+.clipboard:hover + .copy {
+  opacity: 1;
+}
+
+/* Loading */
+
+.loader {
+  border: 6px solid rgba(123, 195, 243, 0.2);
+  border-top-color: #0498e1;
+  border-radius: 50%;
+  width: 3.6rem;
+  height: 3.6rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
