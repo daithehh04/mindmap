@@ -4,7 +4,7 @@ import { IoIosArrowRoundForward } from 'react-icons/io';
 
 export default function NotFound() {
   return (
-    <div className="mt-[100px] pb-[50px] relative">
+    <div className="mt-[20px] pb-[50px] relative min-h-[100vh]">
       <span className="text-[350px] font-bold text-[#3e484d] opacity-10 block text-center leading-[1.2]">
         404
       </span>
