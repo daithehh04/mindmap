@@ -21,7 +21,7 @@ function ModalConfirmDelete({ onDelete, onShowConfirm, id }) {
             </h4>
           </div>
         </div>
-        <div className="flex items-center justify-end gap-3 mt-3">
+        <div className="flex items-center justify-end gap-3 mt-6">
           <button
             className="px-5 py-2 rounded-md bg-[#ced6e0]"
             onClick={() => onShowConfirm(false)}
