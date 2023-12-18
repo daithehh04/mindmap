@@ -35,8 +35,8 @@ export const updateMindmap = async (dataUpdate, id) => {
       },
       body: JSON.stringify(dataUpdate),
     });
-    const data = await response.json();
-    return { response, data };
+    const dataMode = await response.json();
+    return { response, dataMode };
   } catch (error) {
     console.log(error);
   }

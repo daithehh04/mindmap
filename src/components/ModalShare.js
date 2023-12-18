@@ -5,7 +5,8 @@ import { FaPlus } from 'react-icons/fa6';
 import { FiClipboard } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
 import CopyToClipboard from 'react-copy-to-clipboard';
-function ModalShare({ onShow, data, onUpdateMindmap }) {
+import { updateMindmap } from '~/services/mindmap';
+function ModalShare({ onShow, data, id }) {
   const currentPath = window.location.href;
   const [form, setForm] = useState({
     title: data.title,
@@ -34,13 +35,14 @@ function ModalShare({ onShow, data, onUpdateMindmap }) {
         status: 0,
       };
     }
-    const dataUp = await onUpdateMindmap(dataUpdate);
-    if (dataUp) {
+    const { response, dataMode } = await updateMindmap(dataUpdate, id);
+    if (response.ok) {
       let text = 'public';
       if (+mode === 0) {
         text = 'private';
       }
       toast.success(`Change mode ${text} success !`);
+      console.log('responseMode', dataMode);
     } else {
       toast.error('Some thing went wrong !');
     }

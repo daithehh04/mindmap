@@ -125,13 +125,7 @@ function Detail({ id }) {
       </div>
       <div className="h-[calc(100vh-6.5rem)]">
         <Flow id={id} />
-        {show && (
-          <ModalShare
-            onShow={setShow}
-            data={data}
-            onUpdateMindmap={updateMindmap}
-          />
-        )}
+        {show && <ModalShare onShow={setShow} data={data} id={id} />}
       </div>
     </>
   );
