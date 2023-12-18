@@ -3,8 +3,6 @@ import { Toaster } from 'react-hot-toast';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import 'reactflow/dist/style.css';
 import './globals.css';
-import Header from '~/components/Header';
-import Footer from '~/components/Footer';
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -29,7 +27,7 @@ export default function RootLayout({ children }) {
         <body className={roboto.className} suppressHydrationWarning={true}>
           {/* <Header /> */}
           {children}
-          <Footer />
+          {/* <Footer /> */}
           <Toaster />
         </body>
       </UserProvider>

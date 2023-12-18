@@ -111,7 +111,7 @@ const AddNodeOnEdgeDrop = ({ id }) => {
 
   if (isLoading)
     return (
-      <div>
+      <div className="flex items-center justify-center h-[70vh]">
         <Loading />
       </div>
     );

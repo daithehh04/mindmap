@@ -8,11 +8,11 @@ export async function generateMetadata({ params: { id } }) {
   });
   const data = await response.json();
   return {
-    title: data?.title,
-    description: data?.desc,
+    title: data?.title?.slice(0, 64),
+    description: data?.desc?.slice(0, 150),
     openGraph: {
-      title: data?.title,
-      description: data?.desc,
+      title: data?.title?.slice(0, 64),
+      description: data?.desc?.slice(0, 150),
       images: [data?.img_seo],
     },
   };

@@ -12,6 +12,8 @@ import toast from 'react-hot-toast';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import ModalShare from '~/components/ModalShare';
 import Link from 'next/link';
+import Avatar from '~/components/Avatar';
+import NotFound from '~/app/not-found';
 const api = process.env.NEXT_PUBLIC_API;
 
 function Detail({ id }) {
@@ -19,8 +21,8 @@ function Detail({ id }) {
   const [show, setShow] = useState(false);
   const { dataMindmap } = useDataMindmap();
   const { data, error, isLoading } = useSWR(`${api}/mindmaps/${id}`, fetcher);
-  console.log('data-client', data);
   const checkUser = data?.user_id === user?.sub;
+  const status = data?.status;
   const titleRef = useRef('');
   const descRef = useRef('');
   useEffect(() => {
@@ -30,6 +32,9 @@ function Detail({ id }) {
   useEffect(() => {
     document.title = titleRef.current;
   }, [titleRef, data]);
+  if (JSON.stringify(data) === '{}') {
+    return <NotFound />;
+  }
   const updateMindmap = async (data) => {
     try {
       const response = await fetch(`${api}/mindmaps/${id}`, {
@@ -69,17 +74,20 @@ function Detail({ id }) {
   const handleChangeDesc = (evt) => {
     descRef.current = evt.target.value;
   };
+  if (parseInt(status) === 0 && !checkUser) {
+    return <NotFound />;
+  }
 
   return (
     <>
-      <div className="flex items-center mt-4 mb-2 px-[35px] gap-6">
-        <div className="w-[90%] flex items-end gap-8">
+      <div className="flex items-start mt-5 mb-2 px-[35px] gap-6">
+        <div className="w-[90%] flex items-start gap-8">
           <Link
             href={'/my-mindmap'}
-            className="flex items-center gap-1 px-6 py-2 mb-3 text-black bg-white border border-solid rounded-full shadow-xl border-[#ddd] w-max"
+            className="flex items-center gap-1 px-6 py-3 mb-3 text-black bg-white border border-solid rounded-full shadow-xl border-[#ddd] w-max whitespace-normal min-w-[180px]"
           >
             <IoIosArrowBack fontSize={'1.3rem'} />
-            my-mindmap
+            my mindmap
           </Link>
           {!user || (user && !checkUser) ? (
             <div className="flex flex-col">
@@ -113,20 +121,21 @@ function Detail({ id }) {
               className="btn-primary !rounded-md h-12 px-4 flex gap-2 items-center"
               onClick={handleUpdate}
             >
-              <FaSave fontSize={'1.4rem'} />
-              Lưu thay đổi
+              <FaSave fontSize={'1.2rem'} />
+              Save change
             </button>
             <button
               className="btn-secondary !rounded-md h-12 px-4 flex gap-2 items-center"
               onClick={() => setShow(true)}
             >
-              <FaShare fontSize={'1.4rem'} />
-              Chia sẻ
+              <FaShare fontSize={'1.2rem'} />
+              Share
             </button>
+            <Avatar user={user} />
           </div>
         )}
       </div>
-      <div className="h-[calc(100vh-6rem)]">
+      <div className="h-[calc(100vh-6.5rem)]">
         <Flow id={id} />
         {show && (
           <ModalShare

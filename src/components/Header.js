@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import Loading from './Loading';
 
 function Header() {
   const pathname = usePathname();
@@ -32,12 +31,6 @@ function Header() {
     };
   }, []);
 
-  if (isLoading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
   if (error) return <div>{error.message}</div>;
   return (
     <header

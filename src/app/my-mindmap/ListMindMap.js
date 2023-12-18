@@ -33,7 +33,6 @@ const postMindmap = async (dataMindmap) => {
 
 function ListMindMap() {
   const [user, setUser] = useState('');
-  // const { mutate } = useSWRConfig();
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')));
   }, []);

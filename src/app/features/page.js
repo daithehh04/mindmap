@@ -11,6 +11,7 @@ import { FaArrowRightLong } from 'react-icons/fa6';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '~/components/Header';
+import Footer from '~/components/Footer';
 
 export const metadata = {
   title: 'Feature | Mindmap',
@@ -101,6 +102,7 @@ function Features() {
           </Link>
         </div>
       </section>
+      <Footer />
     </>
   );
 }

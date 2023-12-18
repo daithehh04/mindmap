@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Footer from '~/components/Footer';
 import Header from '~/components/Header';
 
 export const metadata = {
@@ -13,7 +14,7 @@ function Contact() {
   return (
     <>
       <Header />
-      <div className="content">
+      <section className="content">
         <div className="flex justify-between gap-8 mx-auto mt-[150px] mb-[80px]">
           <div>
             <p className="mt-4 heading-2">Contact with us</p>
@@ -137,7 +138,8 @@ function Contact() {
             </div>
           </form>
         </div>
-      </div>
+      </section>
+      <Footer />
     </>
   );
 }

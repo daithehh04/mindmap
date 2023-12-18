@@ -199,3 +199,18 @@ input[type='radio']:checked + label {
     transform: rotate(360deg);
   }
 }
+
+/*  */
+.avatar,
+.dropdown-avt {
+  transition: all 0.3s ease;
+}
+div:has(.show-avatar) .avatar {
+  border-color: #00aaff;
+}
+
+.show-avatar {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s ease;
+}
