@@ -24,7 +24,6 @@ function ListMindMap() {
   const [loading, setLoading] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const { mutate } = useSWRConfig();
-  console.log('loading post', loading);
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')));
     setFetchApi(`${api}/mindmaps?user_id=${user?.sub}`);
@@ -60,10 +59,9 @@ function ListMindMap() {
       if (response.ok) {
         console.log('fetchApi', fetchApi);
         mutate(fetchApi);
-        // router.push(`/my-mindmap/${data.id}`);
+        router.push(`/my-mindmap/${data.id}`);
       }
       console.log('responsePostData: ', response);
-      console.log('dataPostData: ', data);
     } catch (error) {
       console.log(error);
     } finally {

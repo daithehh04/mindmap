@@ -26,7 +26,7 @@ export const deleteMindmap = async (id) => {
   }
 };
 
-export const updateMindmap = async (dataUpdate) => {
+export const updateMindmap = async (dataUpdate, id) => {
   try {
     const response = await fetch(`${api}/mindmaps/${id}`, {
       method: 'PATCH',

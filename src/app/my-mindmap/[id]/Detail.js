@@ -21,10 +21,7 @@ function Detail({ id }) {
   const { user } = useUser();
   const [show, setShow] = useState(false);
   const { dataMindmap } = useDataMindmap();
-  const { data, error, isLoading, mutate } = useSWR(
-    `${api}/mindmaps/${id}`,
-    fetcher
-  );
+  const { data } = useSWR(`${api}/mindmaps/${id}`, fetcher);
   const checkUser = data?.user_id === user?.sub;
   const status = data?.status;
   const titleRef = useRef('');
@@ -45,10 +42,10 @@ function Detail({ id }) {
       title: titleRef.current,
       desc: descRef.current,
     };
-    const { response, data } = await updateMindmap(dataUpdate);
+    const { data, response } = await updateMindmap(dataUpdate, id);
     if (response.ok) {
       toast.success('Update success!');
-      console.log('dataUpdate: ', data);
+      console.log('responseUpdate: ', response);
     } else {
       toast.error('Some thing went wrong!');
     }
