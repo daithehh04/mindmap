@@ -8,6 +8,27 @@ body {
   overflow-x: hidden;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b8b8b8;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
 .content {
   max-width: 1170px;
   width: 100%;
@@ -205,8 +226,12 @@ input[type='radio']:checked + label {
 .dropdown-avt {
   transition: all 0.3s ease;
 }
+.avatar:hover {
+  scale: 0.95;
+}
 div:has(.show-avatar) .avatar {
   border-color: #00aaff;
+  scale: 0.95;
 }
 
 .show-avatar {

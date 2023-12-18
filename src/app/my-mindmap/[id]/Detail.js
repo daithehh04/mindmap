@@ -3,13 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 import useSWR from 'swr';
 import { FaSave } from 'react-icons/fa';
 import { FaShare } from 'react-icons/fa';
+import toast from 'react-hot-toast';
+import ContentEditable from 'react-contenteditable';
 import { IoIosArrowBack } from 'react-icons/io';
 import { fetcher } from '~/utils/fetcher';
 import Flow from '../Flow';
 import { useDataMindmap } from '~/app/context/DataProvider';
-import ContentEditable from 'react-contenteditable';
-import toast from 'react-hot-toast';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import ModalShare from '~/components/ModalShare';
 import Link from 'next/link';
 import Avatar from '~/components/Avatar';
@@ -17,8 +16,7 @@ import NotFound from '~/app/not-found';
 import { updateMindmap } from '~/services/mindmap';
 const api = process.env.NEXT_PUBLIC_API;
 
-function Detail({ id }) {
-  const { user } = useUser();
+function Detail({ id, user }) {
   const [show, setShow] = useState(false);
   const { dataMindmap } = useDataMindmap();
   const { data } = useSWR(`${api}/mindmaps/${id}`, fetcher);

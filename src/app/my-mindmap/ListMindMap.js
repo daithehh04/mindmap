@@ -11,23 +11,18 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
 import Loading from '~/components/Loading';
 import ModalConfirmDelete from '~/components/ModalConfirmDelete';
 import { postMindmap } from '~/services/mindmap';
 
 const api = process.env.NEXT_PUBLIC_API;
 
-function ListMindMap() {
-  const [user, setUser] = useState('');
-  const [fetchApi, setFetchApi] = useState('');
+function ListMindMap({ user }) {
+  const fetchApi = `${api}/mindmaps?user_id=${user?.sub}`;
   const [loading, setLoading] = useState(false);
+  const [idRemove, setIdRemove] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const { mutate } = useSWRConfig();
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('user')));
-    setFetchApi(`${api}/mindmaps?user_id=${user?.sub}`);
-  }, [user.sub]);
 
   const router = useRouter();
   const { data: mindmaps, error, isLoading } = useSWR(fetchApi, fetcher);
@@ -39,6 +34,8 @@ function ListMindMap() {
       user_id: user?.sub,
       user: user,
       title: 'Tiêu đề mindmap không tên',
+      img_seo:
+        'https://cdn5.mindmeister.com/assets/library/general/mm-logout-illustration_220727-f35a7063c1cb3191481037c2e66edc4999ec2e6e83f4b4f15c3af6ca43753682.png',
       status: 0,
       desc: 'Chưa có mô tả',
       created_at: moment().format('DD/MM/YYYY HH:mm:ss'),
@@ -57,9 +54,8 @@ function ListMindMap() {
       const res = await postMindmap(dataPost);
       const { response, data } = res;
       if (response.ok) {
-        console.log('fetchApi', fetchApi);
         mutate(fetchApi);
-        router.push(`/my-mindmap/${data.id}`);
+        router.push(`/my-mindmap/${data?.id}`);
       }
       console.log('responsePostData: ', response);
     } catch (error) {
@@ -75,6 +71,13 @@ function ListMindMap() {
       </div>
     );
   }
+  if (error) {
+    return;
+  }
+  const handleRemove = (m) => {
+    setIdRemove(m.id);
+    setShowConfirm(true);
+  };
 
   return (
     <>
@@ -117,25 +120,22 @@ function ListMindMap() {
                     >
                       <FaEdit fontSize={'1.6rem'} />
                     </Link>
-                    <button
-                      className="ml-4"
-                      onClick={() => setShowConfirm(true)}
-                    >
+                    <button className="ml-4" onClick={() => handleRemove(m)}>
                       <MdDelete fontSize={'1.6rem'} />
                     </button>
-                    {showConfirm && (
-                      <ModalConfirmDelete
-                        id={m.id}
-                        fetchApi={fetchApi}
-                        onShowConfirm={setShowConfirm}
-                      />
-                    )}
                   </td>
                 </tr>
               ))
             : null}
         </tbody>
       </table>
+      {showConfirm && (
+        <ModalConfirmDelete
+          id={idRemove}
+          fetchApi={fetchApi}
+          onShowConfirm={setShowConfirm}
+        />
+      )}
     </>
   );
 }

@@ -6,12 +6,17 @@ import { FiClipboard } from 'react-icons/fi';
 import { MdClose } from 'react-icons/md';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { updateMindmap } from '~/services/mindmap';
+import { useSWRConfig } from 'swr';
+const api = process.env.NEXT_PUBLIC_API;
+
 function ModalShare({ onShow, data, id }) {
   const currentPath = window.location.href;
+  const { mutate } = useSWRConfig();
+  const fetchApi = `${api}/mindmaps/${id}`;
   const [form, setForm] = useState({
     title: data.title,
     desc: data.desc,
-    img: data.img_seo,
+    img_seo: data.img_seo,
   });
   const [mode, setMode] = useState(1);
   const [copied, setCopied] = useState(false);
@@ -35,16 +40,21 @@ function ModalShare({ onShow, data, id }) {
         status: 0,
       };
     }
-    const { response, dataMode } = await updateMindmap(dataUpdate, id);
-    if (response.ok) {
-      let text = 'public';
-      if (+mode === 0) {
-        text = 'private';
+    try {
+      const { response, dataMode } = await updateMindmap(dataUpdate, id);
+      if (response.ok) {
+        mutate(fetchApi);
+        let text = 'public';
+        if (+mode === 0) {
+          text = 'private';
+        }
+        toast.success(`Change mode ${text} success !`);
+        console.log('responseMode', dataMode);
+      } else {
+        toast.error('Some thing went wrong !');
       }
-      toast.success(`Change mode ${text} success !`);
-      console.log('responseMode', dataMode);
-    } else {
-      toast.error('Some thing went wrong !');
+    } catch (error) {
+      console.log(error);
     }
     onShow(false);
   };
@@ -157,7 +167,7 @@ function ModalShare({ onShow, data, id }) {
                   Ảnh chia sẻ
                 </label>
                 <input
-                  name="img"
+                  name="img_seo"
                   defaultValue={data?.img_seo}
                   onChange={handleChange}
                   type="text"

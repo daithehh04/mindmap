@@ -1,5 +1,6 @@
 import { getSession } from '@auth0/nextjs-auth0/edge';
 import { NextResponse } from 'next/server';
+import NotFound from './app/not-found';
 
 export async function middleware(request) {
   const path = request.nextUrl.pathname;
@@ -12,8 +13,9 @@ export async function middleware(request) {
   }
   if (status === 0) {
     const user = await getSession();
-    if (!user)
+    if (!user) {
       return NextResponse.rewrite(new URL('/api/auth/login', request.url));
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 import Header from '~/components/Header';
-import ListMindMap from './ListMindMap';
 import Footer from '~/components/Footer';
+import MyMindmap from './MyMindmap';
 
 export const metadata = {
   title: 'Mindmap - Collaborative Mind Mapping | Mindmap',
@@ -16,7 +16,7 @@ function MindMap() {
       <Header />
       <div className="px-[30px] pb-[100px] pt-[120px]">
         <h2 className="heading-1 !text-4xl">My mindmap</h2>
-        <ListMindMap />
+        <MyMindmap />
       </div>
       <Footer />
     </>
