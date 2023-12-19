@@ -34,7 +34,14 @@ function Navigation({ user }) {
     >
       <div className="flex items-center justify-between px-8 py-3 mx-auto">
         <Link href={'/'} className="logo">
-          <Image src="/image/logo.svg" alt="logo" width={120} height={350} />
+          <Image
+            src="/image/logo.svg"
+            alt="logo"
+            width={0}
+            height={0}
+            priority
+            className="w-[120px] h-auto object-cover"
+          />
         </Link>
         <nav className="flex items-center gap-6 px-4 py-3 rounded-full bg-gray backdrop-blur-md ">
           <Link

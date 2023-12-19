@@ -11,12 +11,14 @@ function ModalConfirmDelete({ onShowConfirm, id, fetchApi }) {
       console.log('responseDelete', response);
       if (response?.ok) {
         mutate(fetchApi);
-        toast.success('delete mindmap success!');
+        toast.success('Delete mindmap success!');
+      } else {
+        toast.error('Some thing went wrong!');
       }
       onShowConfirm(false);
     } catch (error) {
       console.log(error);
-      toast.error('delete failed!');
+      toast.error('Delete failed!');
     }
   };
   return (

@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import Loading from '~/components/Loading';
 import ModalConfirmDelete from '~/components/ModalConfirmDelete';
 import { postMindmap } from '~/services/mindmap';
+import toast from 'react-hot-toast';
 
 const api = process.env.NEXT_PUBLIC_API;
 
@@ -55,25 +56,17 @@ function ListMindMap({ user }) {
       const { response, data } = res;
       if (response.ok) {
         mutate(fetchApi);
-        router.push(`/my-mindmap/${data?.id}`);
+        // router.push(`/my-mindmap/${data?.id}`);
       }
       console.log('responsePostData: ', response);
     } catch (error) {
+      toast.error('Some thing went wrong!');
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
-  if (loading || isLoading) {
-    return (
-      <div className="flex min-h-[20vh] items-center justify-center ">
-        <Loading />
-      </div>
-    );
-  }
-  if (error) {
-    return;
-  }
+
   const handleRemove = (m) => {
     setIdRemove(m.id);
     setShowConfirm(true);
@@ -98,9 +91,7 @@ function ListMindMap({ user }) {
           </tr>
         </thead>
         <tbody>
-          {typeof mindmaps === 'object' &&
-          Object.keys(mindmaps).length &&
-          !loading
+          {typeof mindmaps === 'object' && Object.keys(mindmaps).length
             ? mindmaps?.map((m, i) => (
                 <tr key={i}>
                   <td className="w-[70%] border border-gray p-2">
@@ -129,6 +120,12 @@ function ListMindMap({ user }) {
             : null}
         </tbody>
       </table>
+      {loading ||
+        (isLoading && (
+          <div className="flex items-center justify-center mt-8">
+            <Loading />
+          </div>
+        ))}
       {showConfirm && (
         <ModalConfirmDelete
           id={idRemove}

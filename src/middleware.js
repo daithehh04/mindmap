@@ -1,6 +1,5 @@
 import { getSession } from '@auth0/nextjs-auth0/edge';
 import { NextResponse } from 'next/server';
-import NotFound from './app/not-found';
 
 export async function middleware(request) {
   const path = request.nextUrl.pathname;

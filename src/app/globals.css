@@ -207,12 +207,12 @@ input[type='radio']:checked + label {
 /* Loading */
 
 .loader {
-  border: 6px solid rgba(123, 195, 243, 0.2);
-  border-top-color: #0498e1;
+  border: 6px solid rgba(183, 217, 239, 0.874);
+  border-top-color: #3490dc;
   border-radius: 50%;
-  width: 3.6rem;
-  height: 3.6rem;
-  animation: spin 1s linear infinite;
+  width: 3rem;
+  height: 3rem;
+  animation: spin 1.2s linear infinite;
 }
 
 @keyframes spin {
