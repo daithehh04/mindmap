@@ -1,6 +1,5 @@
 import { DataProvider } from '~/app/context/DataProvider';
 import Detail from './Detail';
-import { getSession } from '@auth0/nextjs-auth0';
 
 const api = process.env.NEXT_PUBLIC_API;
 export async function generateMetadata({ params: { id } }) {
@@ -20,10 +19,9 @@ export async function generateMetadata({ params: { id } }) {
 }
 
 async function MindmapDetail({ params: { id } }) {
-  const { user } = await getSession();
   return (
     <DataProvider>
-      <Detail id={id} user={user} />
+      <Detail id={id} />
     </DataProvider>
   );
 }

@@ -14,12 +14,14 @@ import Link from 'next/link';
 import Avatar from '~/components/Avatar';
 import NotFound from '~/app/not-found';
 import { updateMindmap } from '~/services/mindmap';
+import { useUser } from '@auth0/nextjs-auth0/client';
 const api = process.env.NEXT_PUBLIC_API;
 
-function Detail({ id, user }) {
+function Detail({ id }) {
   const [show, setShow] = useState(false);
   const { dataMindmap } = useDataMindmap();
   const { data } = useSWR(`${api}/mindmaps/${id}`, fetcher);
+  const { user } = useUser();
   const checkUser = data?.user_id === user?.sub;
   const status = data?.status;
   const titleRef = useRef('');
