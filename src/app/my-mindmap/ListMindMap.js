@@ -15,6 +15,7 @@ import Loading from '~/components/Loading';
 import ModalConfirmDelete from '~/components/ModalConfirmDelete';
 import { postMindmap } from '~/services/mindmap';
 import toast from 'react-hot-toast';
+import { errorText } from '~/utils/exception';
 
 const api = process.env.NEXT_PUBLIC_API;
 
@@ -56,11 +57,12 @@ function ListMindMap({ user }) {
       const { response, data } = res;
       if (response.ok) {
         mutate(fetchApi);
+        toast.success('Create mindmap success!');
         // router.push(`/my-mindmap/${data?.id}`);
       }
       console.log('responsePostData: ', response);
     } catch (error) {
-      toast.error('Some thing went wrong!');
+      toast.error(errorText);
       console.log(error);
     } finally {
       setLoading(false);
@@ -81,51 +83,54 @@ function ListMindMap({ user }) {
         <FiPlusCircle />
         Create new
       </button>
-      <table className="w-full text-black">
-        <thead>
-          <tr className="text-xl bg-blue1">
-            <th className="p-4 text-left border border-gray">Tên</th>
-            <th className="p-4 text-left border border-gray">Tạo lúc</th>
-            <th className="p-4 text-left border border-gray">Trạng thái</th>
-            <th className="p-4 text-left border border-gray">Hành động</th>
-          </tr>
-        </thead>
-        <tbody>
-          {typeof mindmaps === 'object' && Object.keys(mindmaps).length
-            ? mindmaps?.map((m, i) => (
-                <tr key={i}>
-                  <td className="w-[70%] border border-gray p-2">
-                    <h2 className="text-xl">{m.title} </h2>
-                    <p className="font-thin">{m.desc}</p>
-                  </td>
-                  <td className="p-2 border border-gray">{m.created_at}</td>
-                  <td className="p-2 border border-gray">
-                    <span className="font-medium text-[#FC427B] block text-center">
-                      {+m.status === 0 ? 'Private' : 'Public'}
-                    </span>
-                  </td>
-                  <td className="p-2 border border-gray">
-                    <Link
-                      href={`/my-mindmap/${m.id}`}
-                      className="inline-block ml-2"
-                    >
-                      <FaEdit fontSize={'1.6rem'} />
-                    </Link>
-                    <button className="ml-4" onClick={() => handleRemove(m)}>
-                      <MdDelete fontSize={'1.6rem'} />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            : null}
-        </tbody>
-      </table>
-      {loading ||
-        (isLoading && (
-          <div className="flex items-center justify-center mt-8">
+      <div className="relative">
+        <table className="w-full text-black">
+          <thead>
+            <tr className="text-xl bg-blue1">
+              <th className="p-4 text-left border border-gray">Tên</th>
+              <th className="p-4 text-left border border-gray">Tạo lúc</th>
+              <th className="p-4 text-left border border-gray">Trạng thái</th>
+              <th className="p-4 text-left border border-gray">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            {typeof mindmaps === 'object' && Object.keys(mindmaps).length
+              ? mindmaps?.map((m, i) => (
+                  <tr key={i}>
+                    <td className="w-[70%] border border-gray p-2">
+                      <h2 className="text-xl">{m.title} </h2>
+                      <p className="font-thin">{m.desc}</p>
+                    </td>
+                    <td className="p-2 border border-gray">{m.created_at}</td>
+                    <td className="p-2 border border-gray">
+                      <span className="font-medium text-[#FC427B] block text-center">
+                        {+m.status === 0 ? 'Private' : 'Public'}
+                      </span>
+                    </td>
+                    <td className="p-2 border border-gray">
+                      <Link
+                        href={`/my-mindmap/${m.id}`}
+                        className="inline-block ml-2"
+                      >
+                        <FaEdit fontSize={'1.6rem'} />
+                      </Link>
+                      <button className="ml-4" onClick={() => handleRemove(m)}>
+                        <MdDelete fontSize={'1.6rem'} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              : null}
+          </tbody>
+        </table>
+        {(isLoading || loading) && (
+          <div
+            className={`absolute opacity-40 bg-white w-full top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-full `}
+          >
             <Loading />
           </div>
-        ))}
+        )}
+      </div>
       {showConfirm && (
         <ModalConfirmDelete
           id={idRemove}

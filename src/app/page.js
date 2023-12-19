@@ -34,6 +34,7 @@ export default function Home() {
               src={'./image/iconH-1.svg'}
               width={100}
               height={600}
+              className="h-[3.75rem] w-auto object-cover"
               alt="icon"
             />
             <h4 className="mt-auto text-xl font-thin text-center black text-x">
@@ -49,6 +50,7 @@ export default function Home() {
               src={'./image/iconH-2.svg'}
               width={100}
               height={600}
+              className="h-[3.75rem] w-auto object-cover"
               alt="icon"
             />
             <h4 className="mt-auto text-xl font-thin text-center black text-x">
@@ -64,6 +66,7 @@ export default function Home() {
               src={'./image/iconH-3.svg'}
               width={140}
               height={600}
+              className="h-[3.75rem] w-auto object-cover"
               alt="icon"
             />
             <h4 className="mt-auto text-xl font-thin text-center black text-x">
@@ -79,6 +82,7 @@ export default function Home() {
               src={'./image/iconH-4.svg'}
               width={70}
               height={400}
+              className="h-[3.75rem] w-auto object-cover"
               alt="icon"
             />
             <h4 className="mt-auto text-xl font-thin text-center black text-x">
@@ -101,8 +105,8 @@ export default function Home() {
             src={'./image/chart.svg'}
             width={800}
             height={600}
+            className="h-[3.75rem] w-full mt-12 object-cover"
             alt="chart"
-            className="w-full mt-12"
           />
         </section>
       </main>

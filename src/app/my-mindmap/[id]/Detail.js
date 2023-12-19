@@ -15,6 +15,7 @@ import Avatar from '~/components/Avatar';
 import NotFound from '~/app/not-found';
 import { updateMindmap } from '~/services/mindmap';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { errorText } from '~/utils/exception';
 const api = process.env.NEXT_PUBLIC_API;
 
 function Detail({ id }) {
@@ -42,12 +43,17 @@ function Detail({ id }) {
       title: titleRef.current,
       desc: descRef.current,
     };
-    const { data, response } = await updateMindmap(dataUpdate, id);
-    if (response.ok) {
-      toast.success('Update success!');
-      console.log('responseUpdate: ', response);
-    } else {
-      toast.error('Some thing went wrong!');
+    try {
+      const { data, response } = await updateMindmap(dataUpdate, id);
+      if (response.ok) {
+        toast.success('Update success!');
+        console.log('responseUpdate: ', response);
+      } else {
+        toast.error(errorText);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(errorText);
     }
   };
 

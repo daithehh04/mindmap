@@ -88,6 +88,7 @@ function Features() {
             src={'/image/ui-glass.png'}
             width={600}
             height={400}
+            className="object-cover w-auto h-auto"
             alt="img"
           />
           <h2 className="heading-2">Build a Better Mind Map</h2>

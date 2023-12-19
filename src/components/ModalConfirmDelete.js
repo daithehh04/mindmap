@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { IoWarningOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
 import { deleteMindmap } from '~/services/mindmap';
+import { errorText } from '~/utils/exception';
 function ModalConfirmDelete({ onShowConfirm, id, fetchApi }) {
   const { mutate } = useSWRConfig();
   const handleDelete = async () => {
@@ -13,12 +14,12 @@ function ModalConfirmDelete({ onShowConfirm, id, fetchApi }) {
         mutate(fetchApi);
         toast.success('Delete mindmap success!');
       } else {
-        toast.error('Some thing went wrong!');
+        toast.error(errorText);
       }
       onShowConfirm(false);
     } catch (error) {
       console.log(error);
-      toast.error('Delete failed!');
+      toast.error(errorText);
     }
   };
   return (
