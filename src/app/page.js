@@ -105,7 +105,7 @@ export default function Home() {
             src={'./image/chart.svg'}
             width={800}
             height={600}
-            className="h-[3.75rem] w-full mt-12 object-cover"
+            className="object-cover w-full h-auto mt-12"
             alt="chart"
           />
         </section>

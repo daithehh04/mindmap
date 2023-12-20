@@ -43,7 +43,7 @@ function Navigation({ user }) {
             className="w-[120px] h-auto object-cover"
           />
         </Link>
-        <nav className="flex items-center gap-6 px-4 py-3 rounded-full bg-gray backdrop-blur-md ">
+        <nav className="flex items-center gap-6 px-[10px] py-2 rounded-full bg-blue1 backdrop-blur-md ">
           <Link
             href={'/'}
             className={`${
