@@ -60,7 +60,6 @@ function ListMindMap({ user }) {
         toast.success('Create mindmap success!');
         router.push(`/my-mindmap/${id_mindmap}`);
       }
-      console.log('responsePostData: ', response);
     } catch (error) {
       toast.error(errorText);
       console.log(error);

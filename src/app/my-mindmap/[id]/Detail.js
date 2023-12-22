@@ -77,7 +77,7 @@ function Detail({ id }) {
         <div className="w-[90%] flex items-start gap-8">
           <Link
             href={'/my-mindmap'}
-            className="flex items-center gap-1 px-6 py-3 mb-3 text-black bg-white border border-solid rounded-full shadow-xl border-[#ddd] w-max whitespace-normal min-w-[180px]"
+            className="flex items-center gap-1 px-6 py-3 mb-3 text-black bg-white border border-solid rounded-full border-[#ddd] shadow-md w-max whitespace-normal min-w-[180px] hover:shadow-xl transition-all"
           >
             <IoIosArrowBack fontSize={'1.3rem'} />
             my mindmap

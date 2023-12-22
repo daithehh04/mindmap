@@ -1,7 +1,8 @@
-const api = process.env.NEXT_PUBLIC_API;
+// const api = process.env.NEXT_PUBLIC_API;
+const api = 'https://k32sm5-8080.csb.app/mindmaps';
 export const postMindmap = async (data) => {
   try {
-    const response = await fetch(`${api}/mindmaps`, {
+    const response = await fetch(`${api}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -16,7 +17,7 @@ export const postMindmap = async (data) => {
 
 export const deleteMindmap = async (id) => {
   try {
-    const response = await fetch(`${api}/mindmaps/${id}`, {
+    const response = await fetch(`${api}/${id}`, {
       method: 'DELETE',
     });
     return response;
@@ -27,7 +28,7 @@ export const deleteMindmap = async (id) => {
 
 export const updateMindmap = async (dataUpdate, id) => {
   try {
-    const response = await fetch(`${api}/mindmaps/${id}`, {
+    const response = await fetch(`${api}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

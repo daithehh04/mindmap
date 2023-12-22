@@ -5,7 +5,6 @@ import { IoWarningOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
 import { deleteMindmap } from '~/services/mindmap';
 import { errorText } from '~/utils/exception';
-import Loading from './Loading';
 function ModalConfirmDelete({ onShowConfirm, id, fetchApi, onLoading }) {
   const { mutate } = useSWRConfig();
   const handleDelete = async () => {
