@@ -53,8 +53,7 @@ function ListMindMap({ user }) {
     };
     try {
       setLoading(true);
-      const res = await postMindmap(dataPost);
-      const { response, data } = res;
+      const response = await postMindmap(dataPost);
       if (response.ok) {
         mutate(fetchApi);
         toast.success('Create mindmap success!');

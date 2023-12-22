@@ -8,8 +8,7 @@ export const postMindmap = async (data) => {
       },
       body: JSON.stringify(data),
     });
-    const dataPost = await response.json();
-    return { response, data: dataPost };
+    return response;
   } catch (error) {
     console.log(error);
   }
