@@ -207,11 +207,11 @@ input[type='radio']:checked + label {
 /* Loading */
 
 .loader {
-  border: 6px solid rgba(183, 217, 239, 0.874);
-  border-top-color: #3490dc;
+  border: 6px solid rgba(216, 248, 234, 0.88);
+  border-top-color: #26de81;
   border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
+  width: 3.2rem;
+  height: 3.2rem;
   animation: spin 1.2s linear infinite;
 }
 

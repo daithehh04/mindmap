@@ -16,10 +16,12 @@ import NotFound from '~/app/not-found';
 import { updateMindmap } from '~/services/mindmap';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { errorText } from '~/utils/exception';
+import Loading from '~/components/Loading';
 const api = process.env.NEXT_PUBLIC_API;
 
 function Detail({ id }) {
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { dataMindmap } = useDataMindmap();
   const { data } = useSWR(`${api}/mindmaps/${id}`, fetcher);
   const { user } = useUser();
@@ -44,6 +46,7 @@ function Detail({ id }) {
       desc: descRef.current,
     };
     try {
+      setLoading(true);
       const { data, response } = await updateMindmap(dataUpdate, id);
       if (response.ok) {
         toast.success('Update success!');
@@ -54,6 +57,8 @@ function Detail({ id }) {
     } catch (error) {
       console.log(error);
       toast.error(errorText);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -133,6 +138,14 @@ function Detail({ id }) {
         <Flow id={id} />
         {show && <ModalShare onShow={setShow} data={data} id={id} />}
       </div>
+      {loading && (
+        <div
+          className={`absolute w-full top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-full`}
+          style={{ background: 'rgba(255,255,255,0.6)' }}
+        >
+          <Loading />
+        </div>
+      )}
     </>
   );
 }
