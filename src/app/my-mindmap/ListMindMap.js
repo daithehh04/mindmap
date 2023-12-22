@@ -29,8 +29,8 @@ function ListMindMap({ user }) {
   const router = useRouter();
   const { data: mindmaps, error, isLoading } = useSWR(fetchApi, fetcher);
   console.log('mindmaps up: ', mindmaps);
-  const id_mindmap = nanoid();
   const handleCreateMindmap = async () => {
+    const id_mindmap = nanoid();
     const dataPost = {
       id: id_mindmap,
       user_id: user?.sub,
@@ -54,7 +54,8 @@ function ListMindMap({ user }) {
     try {
       setLoading(true);
       const response = await postMindmap(dataPost);
-      if (response.ok) {
+      console.log('responsePostdata', response);
+      if (response?.ok) {
         mutate(fetchApi);
         toast.success('Create mindmap success!');
         router.push(`/my-mindmap/${id_mindmap}`);

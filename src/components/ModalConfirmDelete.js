@@ -14,8 +14,8 @@ function ModalConfirmDelete({ onShowConfirm, id, fetchApi, onLoading }) {
       onLoading(true);
       const response = await deleteMindmap(id);
       console.log('responseDelete', response);
+      mutate(fetchApi);
       if (response?.ok) {
-        mutate(fetchApi);
         toast.success('Delete mindmap success!');
       } else {
         toast.error(errorText);
