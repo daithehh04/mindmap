@@ -1,7 +1,5 @@
-import { getSession } from '@auth0/nextjs-auth0';
 import ListMindMap from './ListMindMap';
-async function MyMindmap() {
-  const { user } = await getSession();
+async function MyMindmap({ user }) {
   return (
     <div>
       <ListMindMap user={user} />
