@@ -2,7 +2,6 @@ const api = process.env.NEXT_PUBLIC_API;
 export const postMindmap = async (data) => {
   try {
     const response = await fetch(`${api}/mindmaps`, {
-      mode: 'no-cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
