@@ -112,10 +112,16 @@ function ListMindMap({ user }) {
                         href={`/my-mindmap/${m.id}`}
                         className="inline-block ml-2"
                       >
-                        <FaEdit fontSize={'1.6rem'} />
+                        <FaEdit
+                          fontSize={'1.5rem'}
+                          className="hover:text-[#3498db]"
+                        />
                       </Link>
                       <button className="ml-4" onClick={() => handleRemove(m)}>
-                        <MdDelete fontSize={'1.6rem'} />
+                        <MdDelete
+                          fontSize={'1.6rem'}
+                          className="hover:text-[#e74c3c]"
+                        />
                       </button>
                     </td>
                   </tr>
