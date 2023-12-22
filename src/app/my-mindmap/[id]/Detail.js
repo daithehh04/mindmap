@@ -47,16 +47,10 @@ function Detail({ id }) {
     };
     try {
       setLoading(true);
-      const { data, response } = await updateMindmap(dataUpdate, id);
-      if (response.ok) {
-        toast.success('Update success!');
-        console.log('responseUpdate: ', response);
-      } else {
-        toast.error(errorText);
-      }
+      const res = await updateMindmap(dataUpdate, id);
+      toast.success('Update success!');
     } catch (error) {
-      console.log(error);
-      toast.error(errorText);
+      // console.log(error);
     } finally {
       setLoading(false);
     }
