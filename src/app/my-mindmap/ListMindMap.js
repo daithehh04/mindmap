@@ -55,18 +55,17 @@ function ListMindMap({ user }) {
       setLoading(true);
       const res = await postMindmap(dataPost);
       const { response, data } = res;
-      mutate(fetchApi);
-      toast.success('Create mindmap success!');
-      router.push(`/my-mindmap/${id_mindmap}`);
-      // if (response.ok) {
-
-      // }
+      if (response.ok) {
+        mutate(fetchApi);
+        toast.success('Create mindmap success!');
+      }
       console.log('responsePostData: ', response);
     } catch (error) {
       // toast.error(errorText);
       console.log(error);
     } finally {
       setLoading(false);
+      router.push(`/my-mindmap/${id_mindmap}`);
     }
   };
 
