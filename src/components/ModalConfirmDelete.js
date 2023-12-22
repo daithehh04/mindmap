@@ -1,13 +1,17 @@
 'use client';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { IoWarningOutline } from 'react-icons/io5';
 import { useSWRConfig } from 'swr';
 import { deleteMindmap } from '~/services/mindmap';
 import { errorText } from '~/utils/exception';
-function ModalConfirmDelete({ onShowConfirm, id, fetchApi }) {
+import Loading from './Loading';
+function ModalConfirmDelete({ onShowConfirm, id, fetchApi, onLoading }) {
   const { mutate } = useSWRConfig();
   const handleDelete = async () => {
+    onShowConfirm(false);
     try {
+      onLoading(true);
       const response = await deleteMindmap(id);
       console.log('responseDelete', response);
       if (response?.ok) {
@@ -16,10 +20,11 @@ function ModalConfirmDelete({ onShowConfirm, id, fetchApi }) {
       } else {
         toast.error(errorText);
       }
-      onShowConfirm(false);
     } catch (error) {
       console.log(error);
       toast.error(errorText);
+    } finally {
+      onLoading(false);
     }
   };
   return (

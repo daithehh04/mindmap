@@ -131,7 +131,7 @@ function ListMindMap({ user }) {
         </table>
         {(isLoading || loading) && (
           <div
-            className={`absolute opacity-40 bg-white w-full top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-full `}
+            className={`absolute opacity-60 bg-white w-full top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-full `}
           >
             <Loading />
           </div>
@@ -139,6 +139,7 @@ function ListMindMap({ user }) {
       </div>
       {showConfirm && (
         <ModalConfirmDelete
+          onLoading={setLoading}
           id={idRemove}
           fetchApi={fetchApi}
           onShowConfirm={setShowConfirm}
