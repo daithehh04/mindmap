@@ -4,11 +4,13 @@ import { IoArrowForward } from 'react-icons/io5';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
-function Navigation({ user }) {
+function Navigation() {
   const pathname = usePathname();
   const [isHeaderActive, setIsHeaderActive] = useState(false);
 
+  const { user } = useUser();
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;

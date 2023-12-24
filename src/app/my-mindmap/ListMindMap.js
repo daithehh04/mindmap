@@ -30,16 +30,7 @@ function ListMindMap({ user }) {
   const router = useRouter();
   const { data: mindmaps, error, isLoading } = useSWR(fetchApi, fetcher);
 
-  // console.log('mindmaps loaded: ', mindmaps);
-  const getDataMindmap = useCallback(async () => {
-    const res = await getMindmaps(user.sub);
-    const data = await res.json();
-    setDataMaps(data);
-    console.log('data', data);
-  }, [user]);
-  useEffect(() => {
-    getDataMindmap();
-  }, [user, getDataMindmap]);
+  console.log('mindmaps loaded: ', mindmaps);
   const id_mindmap = nanoid();
 
   const dataPost = {
@@ -70,14 +61,13 @@ function ListMindMap({ user }) {
       if (response?.ok) {
         mutate(fetchApi);
         toast.success('Create mindmap success!');
-        router.push(`/my-mindmap/${id_mindmap}`);
       }
     } catch (error) {
       toast.error(errorText);
       console.log(error);
     } finally {
       setLoading(false);
-      getDataMindmap();
+      router.push(`/my-mindmap/${id_mindmap}`);
     }
   };
 
@@ -106,39 +96,43 @@ function ListMindMap({ user }) {
             </tr>
           </thead>
           <tbody>
-            {dataMaps.length
-              ? dataMaps?.map((m, i) => (
-                  <tr key={i}>
-                    <td className="w-[70%] border border-gray p-2">
-                      <h2 className="text-xl">{m.title} </h2>
-                      <p className="font-thin">{m.desc}</p>
-                    </td>
-                    <td className="p-2 border border-gray">{m.created_at}</td>
-                    <td className="p-2 border border-gray">
-                      <span className="font-medium text-[#FC427B] block text-center">
-                        {+m.status === 0 ? 'Private' : 'Public'}
-                      </span>
-                    </td>
-                    <td className="p-2 border border-gray">
-                      <Link
-                        href={`/my-mindmap/${m.id}`}
-                        className="inline-block ml-2"
-                      >
-                        <FaEdit
-                          fontSize={'1.5rem'}
-                          className="hover:text-[#3498db]"
-                        />
-                      </Link>
-                      <button className="ml-4" onClick={() => handleRemove(m)}>
-                        <MdDelete
-                          fontSize={'1.6rem'}
-                          className="hover:text-[#e74c3c]"
-                        />
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              : null}
+            {mindmaps?.length ? (
+              mindmaps?.map((m, i) => (
+                <tr key={i}>
+                  <td className="w-[70%] border border-gray p-2">
+                    <h2 className="text-xl">{m.title} </h2>
+                    <p className="font-thin">{m.desc}</p>
+                  </td>
+                  <td className="p-2 border border-gray">{m.created_at}</td>
+                  <td className="p-2 border border-gray">
+                    <span className="font-medium text-[#FC427B] block text-center">
+                      {+m.status === 0 ? 'Private' : 'Public'}
+                    </span>
+                  </td>
+                  <td className="p-2 border border-gray">
+                    <Link
+                      href={`/my-mindmap/${m.id}`}
+                      className="inline-block ml-2"
+                    >
+                      <FaEdit
+                        fontSize={'1.5rem'}
+                        className="hover:text-[#3498db]"
+                      />
+                    </Link>
+                    <button className="ml-4" onClick={() => handleRemove(m)}>
+                      <MdDelete
+                        fontSize={'1.6rem'}
+                        className="hover:text-[#e74c3c]"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <p className="absolute mt-6 italic text-xl text-gray1 font-thin text-center left-[50%] -translate-x-1/2">
+                Chưa có mindmaps
+              </p>
+            )}
           </tbody>
         </table>
         {(isLoading || loading) && (
@@ -155,7 +149,6 @@ function ListMindMap({ user }) {
           id={idRemove}
           fetchApi={fetchApi}
           onShowConfirm={setShowConfirm}
-          getDataMindmap={getDataMindmap}
         />
       )}
     </>

@@ -2,7 +2,6 @@ import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 import MyMindmap from './MyMindmap';
 import { getSession } from '@auth0/nextjs-auth0';
-import { redirect } from 'next/navigation';
 
 export const metadata = {
   title: 'Mindmap - Collaborative Mind Mapping | Mindmap',
@@ -15,9 +14,6 @@ export const metadata = {
 async function MindMap() {
   const data = await getSession();
   const user = data?.user;
-  if (!user) {
-    return redirect('/api/auth/login');
-  }
   return (
     <>
       <Header />

@@ -1,4 +1,4 @@
-// import { getSession } from '@auth0/nextjs-auth0/edge';
+import { getSession } from '@auth0/nextjs-auth0/edge';
 import { NextResponse } from 'next/server';
 
 export async function middleware(request) {
@@ -11,10 +11,10 @@ export async function middleware(request) {
     status = parseInt(data.status);
   }
   if (status === 0) {
-    // const user = await getSession();
-    // if (!user) {
-    //   return NextResponse.rewrite(new URL('/api/auth/login', request.url));
-    // }
+    const user = await getSession();
+    if (!user) {
+      return NextResponse.rewrite(new URL('/api/auth/login', request.url));
+    }
   }
 }
 
