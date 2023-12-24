@@ -1,5 +1,4 @@
-// const api = process.env.NEXT_PUBLIC_API;
-const api = 'http://localhost:3005/mindmaps';
+const api = `${process.env.NEXT_PUBLIC_API}/mindmaps`;
 export const postMindmap = async (data) => {
   try {
     const response = await fetch(`${api}`, {
