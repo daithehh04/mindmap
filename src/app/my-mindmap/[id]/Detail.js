@@ -48,9 +48,13 @@ function Detail({ id }) {
     try {
       setLoading(true);
       const res = await updateMindmap(dataUpdate, id);
-      toast.success('Update success!');
+      if (res?.response?.ok) {
+        toast.success('Update success!');
+      } else {
+        toast.error(errorText);
+      }
     } catch (error) {
-      // console.log(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }

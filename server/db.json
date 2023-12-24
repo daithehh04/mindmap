@@ -1,0 +1,42 @@
+{
+  "mindmaps": [
+    {
+      "id": "y4ppRHqPoC6W7KtbI4BoX",
+      "user_id": "google-oauth2|111435502215660232480",
+      "user": {
+        "given_name": "Thế",
+        "family_name": "Nguyễn Đại",
+        "nickname": "daithehh04",
+        "name": "Thế Nguyễn Đại",
+        "picture": "https://lh3.googleusercontent.com/a/ACg8ocLtZKgqAjEcgDnICj7WJb9vVL6_ESDPbg-lDdhbJCPT0A=s96-c",
+        "locale": "vi",
+        "updated_at": "2023-12-24T03:44:47.800Z",
+        "email": "daithehh04@gmail.com",
+        "email_verified": true,
+        "sub": "google-oauth2|111435502215660232480",
+        "sid": "LS97n31zsSxhz8-3PXMUwXMmqyHgBPV7"
+      },
+      "title": "nodejs update",
+      "img_seo": "https://cdn5.mindmeister.com/assets/library/general/mm-logout-illustration_220727-f35a7063c1cb3191481037c2e66edc4999ec2e6e83f4b4f15c3af6ca43753682.png",
+      "status": 0,
+      "desc": "Chưa có mô tả",
+      "created_at": "24/12/2023 10:52:25",
+      "nodes": [
+        {
+          "id": "0",
+          "type": "textUpdater",
+          "data": {
+            "value": "My mindmap"
+          },
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "width": 150,
+          "height": 42
+        }
+      ],
+      "edges": []
+    }
+  ]
+}
