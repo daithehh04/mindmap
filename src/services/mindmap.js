@@ -8,9 +8,15 @@ export const postMindmap = async (data) => {
       },
       body: JSON.stringify(data),
     });
+
+    if (!response.ok) {
+      // Xử lý khi trạng thái phản hồi không thành công (ví dụ: 404 Not Found, 500 Internal Server Error)
+      throw new Error(`Request failed with status: ${response.status}`);
+    }
     return response;
   } catch (error) {
-    console.log(error);
+    // Xử lý lỗi xảy ra trong quá trình fetch
+    console.error('Error during fetch:', error);
   }
 };
 
@@ -19,6 +25,14 @@ export const deleteMindmap = async (id) => {
     const response = await fetch(`${api}/${id}`, {
       method: 'DELETE',
     });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getMindmaps = async (id) => {
+  try {
+    const response = await fetch(`${api}?user_id=${id}`);
     return response;
   } catch (error) {
     console.log(error);

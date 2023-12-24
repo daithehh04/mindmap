@@ -8,12 +8,12 @@ import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Loading from '~/components/Loading';
 import ModalConfirmDelete from '~/components/ModalConfirmDelete';
-import { postMindmap } from '~/services/mindmap';
+import { getMindmaps, postMindmap } from '~/services/mindmap';
 import toast from 'react-hot-toast';
 import { errorText } from '~/utils/exception';
 
@@ -22,35 +22,47 @@ const api = process.env.NEXT_PUBLIC_API;
 function ListMindMap({ user }) {
   const fetchApi = `${api}/mindmaps?user_id=${user?.sub}`;
   const [loading, setLoading] = useState(false);
+  const [dataMaps, setDataMaps] = useState([]);
   const [idRemove, setIdRemove] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const { mutate } = useSWRConfig();
 
   const router = useRouter();
   const { data: mindmaps, error, isLoading } = useSWR(fetchApi, fetcher);
-  console.log('mindmaps up: ', mindmaps);
+
+  // console.log('mindmaps loaded: ', mindmaps);
+  const getDataMindmap = useCallback(async () => {
+    const res = await getMindmaps(user.sub);
+    const data = await res.json();
+    setDataMaps(data);
+    console.log('data', data);
+  }, [user]);
+  useEffect(() => {
+    getDataMindmap();
+  }, [user, getDataMindmap]);
+  const id_mindmap = nanoid();
+
+  const dataPost = {
+    id: id_mindmap,
+    user_id: user?.sub,
+    user: user,
+    title: 'Tiêu đề mindmap không tên',
+    img_seo:
+      'https://cdn5.mindmeister.com/assets/library/general/mm-logout-illustration_220727-f35a7063c1cb3191481037c2e66edc4999ec2e6e83f4b4f15c3af6ca43753682.png',
+    status: 0,
+    desc: 'Chưa có mô tả',
+    created_at: moment().format('DD/MM/YYYY HH:mm:ss'),
+    nodes: [
+      {
+        id: '0',
+        type: 'textUpdater',
+        data: { value: 'My mindmap' },
+        position: { x: 0, y: 0 },
+      },
+    ],
+    edges: [],
+  };
   const handleCreateMindmap = async () => {
-    const id_mindmap = nanoid();
-    const dataPost = {
-      id: id_mindmap,
-      user_id: user?.sub,
-      user: user,
-      title: 'Tiêu đề mindmap không tên',
-      img_seo:
-        'https://cdn5.mindmeister.com/assets/library/general/mm-logout-illustration_220727-f35a7063c1cb3191481037c2e66edc4999ec2e6e83f4b4f15c3af6ca43753682.png',
-      status: 0,
-      desc: 'Chưa có mô tả',
-      created_at: moment().format('DD/MM/YYYY HH:mm:ss'),
-      nodes: [
-        {
-          id: '0',
-          type: 'textUpdater',
-          data: { value: 'My mindmap' },
-          position: { x: 0, y: 0 },
-        },
-      ],
-      edges: [],
-    };
     try {
       setLoading(true);
       const response = await postMindmap(dataPost);
@@ -65,6 +77,7 @@ function ListMindMap({ user }) {
       console.log(error);
     } finally {
       setLoading(false);
+      getDataMindmap();
     }
   };
 
@@ -93,8 +106,8 @@ function ListMindMap({ user }) {
             </tr>
           </thead>
           <tbody>
-            {typeof mindmaps === 'object' && Object.keys(mindmaps).length
-              ? mindmaps?.map((m, i) => (
+            {dataMaps.length
+              ? dataMaps?.map((m, i) => (
                   <tr key={i}>
                     <td className="w-[70%] border border-gray p-2">
                       <h2 className="text-xl">{m.title} </h2>
@@ -130,7 +143,7 @@ function ListMindMap({ user }) {
         </table>
         {(isLoading || loading) && (
           <div
-            className={`absolute opacity-60 bg-white w-full top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-full `}
+            className={`fixed opacity-60 bg-white w-full top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-full `}
           >
             <Loading />
           </div>
@@ -142,6 +155,7 @@ function ListMindMap({ user }) {
           id={idRemove}
           fetchApi={fetchApi}
           onShowConfirm={setShowConfirm}
+          getDataMindmap={getDataMindmap}
         />
       )}
     </>

@@ -9,7 +9,7 @@ export default function Error({ error, reset }) {
   }, [error]);
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-[100vh]">
       <h2>Something went wrong!</h2>
       <button
         onClick={
@@ -19,6 +19,6 @@ export default function Error({ error, reset }) {
       >
         Try again
       </button>
-    </>
+    </div>
   );
 }
