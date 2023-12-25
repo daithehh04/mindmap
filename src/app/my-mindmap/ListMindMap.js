@@ -8,14 +8,13 @@ import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import Loading from '~/components/Loading';
 import ModalConfirmDelete from '~/components/ModalConfirmDelete';
 import { getMindmaps, postMindmap } from '~/services/mindmap';
 import toast from 'react-hot-toast';
-import { errorText } from '~/utils/exception';
 
 const api = process.env.NEXT_PUBLIC_API;
 
@@ -29,14 +28,14 @@ function ListMindMap({ user }) {
 
   const router = useRouter();
   const { data: mindmaps, error, isLoading } = useSWR(fetchApi, fetcher);
-  const getData = async () => {
+  const getData = useCallback(async () => {
     const res = await getMindmaps(user?.sub);
     const data = await res.json();
     setDataMaps(data);
-  };
+  }, [user?.sub]);
   useEffect(() => {
     getData();
-  }, [user]);
+  }, [user, getData]);
   const handleCreateMindmap = async () => {
     const id_mindmap = nanoid();
     const dataPost = {
@@ -64,14 +63,12 @@ function ListMindMap({ user }) {
       await postMindmap(dataPost);
       mutate(fetchApi);
       toast.success('Create mindmap success!');
-      setDataMaps(dataMaps.concat(dataPost));
+      setDataMaps([...dataMaps, dataPost]);
     } catch (error) {
-      toast.error(errorText);
-      // console.log(error);
+      console.log(error);
     } finally {
       setLoading(false);
     }
-    router.push(`/my-mindmap/${id_mindmap}`);
   };
 
   const handleRemove = (m) => {
