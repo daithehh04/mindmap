@@ -58,23 +58,19 @@ function ListMindMap({ user }) {
       ],
       edges: [],
     };
-    router.push(`/my-mindmap/${id_mindmap}`);
-    router.refresh();
-    // toast.success('Create mindmap success!');
-    setDataMaps([...dataMaps, dataPost]);
-    postMindmap(dataPost);
+
     try {
-      // setLoading(true);
-      // mutate(fetchApi);
-      // router.push(`/my-mindmap/${id_mindmap}`);
-      // router.refresh();
-      // toast.success('Create mindmap success!');
-      // setDataMaps([...dataMaps, dataPost]);
-      // postMindmap(dataPost);
+      setLoading(true);
+      await postMindmap(dataPost);
+      mutate(fetchApi);
+      toast.success('Create mindmap success!');
+      setDataMaps([...dataMaps, dataPost]);
+      router.refresh();
+      router.push(`/my-mindmap/${id_mindmap}`);
     } catch (error) {
       console.log(error);
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
