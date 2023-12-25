@@ -16,6 +16,7 @@ import NotFound from '~/app/not-found';
 import { updateMindmap } from '~/services/mindmap';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Loading from '~/components/Loading';
+import { redirect } from 'next/navigation';
 const api = process.env.NEXT_PUBLIC_API;
 
 function Detail({ id }) {
@@ -72,6 +73,10 @@ function Detail({ id }) {
   };
   if (parseInt(status) === 0 && !checkUser) {
     return <NotFound />;
+  }
+
+  if (!user) {
+    redirect('api/auth/login');
   }
 
   return (
