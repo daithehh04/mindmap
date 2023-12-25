@@ -10,7 +10,7 @@ import { FiPlusCircle } from 'react-icons/fi';
 
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Loading from '~/components/Loading';
 import ModalConfirmDelete from '~/components/ModalConfirmDelete';
 import { getMindmaps, postMindmap } from '~/services/mindmap';
@@ -27,7 +27,7 @@ function ListMindMap({ user }) {
   const { mutate } = useSWRConfig();
 
   const router = useRouter();
-  const { data: mindmaps, error, isLoading } = useSWR(fetchApi, fetcher);
+  // const { data: mindmaps, error, isLoading } = useSWR(fetchApi, fetcher);
   const getData = useCallback(async () => {
     const res = await getMindmaps(user?.sub);
     const data = await res.json();
@@ -68,6 +68,8 @@ function ListMindMap({ user }) {
       console.log(error);
     } finally {
       setLoading(false);
+      router.push(`/my-mindmap/${id_mindmap}`);
+      router.refresh();
     }
   };
 
@@ -135,7 +137,7 @@ function ListMindMap({ user }) {
           }
         </tbody>
       </table>
-      {(isLoading || loading) && (
+      {loading && (
         <div
           className={`fixed opacity-60 bg-white w-full top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center h-full `}
         >

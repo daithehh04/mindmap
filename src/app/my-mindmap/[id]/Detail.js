@@ -15,7 +15,6 @@ import Avatar from '~/components/Avatar';
 import NotFound from '~/app/not-found';
 import { updateMindmap } from '~/services/mindmap';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import { errorText } from '~/utils/exception';
 import Loading from '~/components/Loading';
 const api = process.env.NEXT_PUBLIC_API;
 
