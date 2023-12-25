@@ -75,10 +75,6 @@ function Detail({ id }) {
     return <NotFound />;
   }
 
-  if (!user) {
-    redirect('api/auth/login');
-  }
-
   return (
     <>
       <div className="flex items-start mt-5 mb-2 px-[35px] gap-6">
