@@ -65,8 +65,8 @@ function ListMindMap({ user }) {
       mutate(fetchApi);
       toast.success('Create mindmap success!');
       setDataMaps([...dataMaps, dataPost]);
-      router.refresh();
       router.push(`/my-mindmap/${id_mindmap}`);
+      router.refresh();
     } catch (error) {
       console.log(error);
     } finally {
