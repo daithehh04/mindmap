@@ -30,7 +30,7 @@ function Navigation() {
 
   return (
     <header
-      className={`fixed top-0 w-full z-20 header bg-[#fff] header ${
+      className={`fixed top-0 w-full z-20 header bg-[#fff] ${
         isHeaderActive ? 'active' : ''
       }`}
     >

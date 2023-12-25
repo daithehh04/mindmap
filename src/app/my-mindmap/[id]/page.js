@@ -4,7 +4,7 @@ import Detail from './Detail';
 const api = process.env.NEXT_PUBLIC_API;
 export async function generateMetadata({ params: { id } }) {
   const response = await fetch(`${api}/mindmaps/${id}`, {
-    next: { revalidate: 120 },
+    next: { revalidate: 30 },
   });
   const data = await response.json();
   return {
