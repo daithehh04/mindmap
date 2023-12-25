@@ -41,18 +41,13 @@ function ModalShare({ onShow, data, id }) {
       };
     }
     try {
-      const { response, dataMode } = await updateMindmap(dataUpdate, id);
-      if (response.ok) {
-        mutate(fetchApi);
-        let text = 'public';
-        if (+mode === 0) {
-          text = 'private';
-        }
-        toast.success(`Change mode ${text} success !`);
-        console.log('responseMode', dataMode);
-      } else {
-        toast.error('Some thing went wrong !');
+      const res = await updateMindmap(dataUpdate, id);
+      mutate(fetchApi);
+      let text = 'public';
+      if (+mode === 0) {
+        text = 'private';
       }
+      toast.success(`Change mode ${text} success !`);
     } catch (error) {
       console.log(error);
     }

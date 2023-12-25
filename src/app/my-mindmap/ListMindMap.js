@@ -64,7 +64,6 @@ function ListMindMap({ user }) {
       await postMindmap(dataPost);
       mutate(fetchApi);
       toast.success('Create mindmap success!');
-      router.push(`/my-mindmap/${id_mindmap}`);
       setDataMaps(dataMaps.concat(dataPost));
     } catch (error) {
       toast.error(errorText);
@@ -72,6 +71,7 @@ function ListMindMap({ user }) {
     } finally {
       setLoading(false);
     }
+    router.push(`/my-mindmap/${id_mindmap}`);
   };
 
   const handleRemove = (m) => {
