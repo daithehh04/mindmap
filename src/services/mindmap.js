@@ -3,6 +3,7 @@ export const postMindmap = async (data) => {
   try {
     const response = await fetch(`${api}`, {
       method: 'POST',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },

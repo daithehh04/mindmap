@@ -5,7 +5,6 @@ import { Handle, Position, useReactFlow } from 'reactflow';
 const handleStyle = { left: 10 };
 
 export default function TextUpdaterNode({ data, isConnectable, ...rest }) {
-  // const [value, setValue] = useState(data.value);
   const [isClicked, setIsClicked] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const { setNodes } = useReactFlow();
