@@ -3,8 +3,8 @@ export const postMindmap = async (data) => {
   try {
     const response = await fetch(`${api}`, {
       method: 'POST',
-      mode: 'cors',
       headers: {
+        Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
@@ -28,7 +28,7 @@ export const deleteMindmap = async (id) => {
     });
     return response;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 export const getMindmaps = async (id) => {
@@ -36,7 +36,7 @@ export const getMindmaps = async (id) => {
     const response = await fetch(`${api}?user_id=${id}`);
     return response;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -52,6 +52,6 @@ export const updateMindmap = async (dataUpdate, id) => {
     const dataMode = await response.json();
     return { response, dataMode };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
