@@ -15,22 +15,22 @@ const getData = async (id) => {
 export async function generateMetadata({ params: { id } }) {
   const data = await getData(id);
   return {
-    title: data?.title?.slice(0, 64) || 'title mindmap',
-    description: data?.desc?.slice(0, 150) || 'description mindmap',
+    title: data?.title_seo?.slice(0, 64) || 'title mindmap',
+    description: data?.desc_seo?.slice(0, 150) || 'description mindmap',
     openGraph: {
-      title: data?.title?.slice(0, 64) || 'title mindmap',
-      description: data?.desc?.slice(0, 150) || 'description mindmap',
+      title: data?.title_seo?.slice(0, 64) || 'title mindmap',
+      description: data?.desc_seo?.slice(0, 150) || 'description mindmap',
       images: [data?.img_seo] || '',
     },
   };
 }
 
 async function MindmapDetail({ params: { id } }) {
-  const data = await getSession();
-  const user = data?.user;
-  if (!user) {
-    redirect('/api/auth/login');
-  }
+  // const data = await getSession();
+  // const user = data?.user;
+  // if (!user) {
+  //   redirect('/api/auth/login');
+  // }
   return (
     <DataProvider>
       <Detail id={id} />

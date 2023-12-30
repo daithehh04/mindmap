@@ -14,8 +14,8 @@ function ModalShare({ onShow, data, id }) {
   const { mutate } = useSWRConfig();
   const fetchApi = `${api}/mindmaps/${id}`;
   const [form, setForm] = useState({
-    title: data.title,
-    desc: data.desc,
+    title_seo: data.title_seo,
+    desc_seo: data.desc_seo,
     img_seo: data.img_seo,
   });
   const [mode, setMode] = useState(1);
@@ -141,9 +141,9 @@ function ModalShare({ onShow, data, id }) {
                   Tiêu đề
                 </label>
                 <input
-                  defaultValue={data?.title}
+                  defaultValue={data?.title_seo}
                   type="text"
-                  name="title"
+                  name="title_seo"
                   onChange={handleChange}
                   className="w-full p-2 mt-1 mb-3 rounded font-normal  outline-none bg-[#f5f8fa] transition-all focus:outline-2 focus:outline-blue"
                 />
@@ -151,11 +151,11 @@ function ModalShare({ onShow, data, id }) {
                   Mô tả
                 </label>
                 <textarea
-                  name="desc"
+                  name="desc_seo"
                   id=""
                   rows="3"
                   onChange={handleChange}
-                  defaultValue={data?.desc}
+                  defaultValue={data?.desc_seo}
                   className="w-full p-1 mt-1 mb-1 rounded font-normal  outline-none bg-[#f5f8fa] transition-all focus:outline-2 focus:outline-blue"
                 ></textarea>
                 <label className="font-medium text-[0.875rem] text-[#6B7280]">

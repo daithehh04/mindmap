@@ -30,8 +30,10 @@ function ListMindMap({ user }) {
   // const { data: mindmaps, error, isLoading } = useSWR(fetchApi, fetcher);
   const getData = useCallback(async () => {
     const res = await getMindmaps(user?.sub);
-    const data = await res.json();
-    setDataMaps(data);
+    if (res?.ok) {
+      const data = await res.json();
+      setDataMaps(data);
+    }
   }, [user?.sub]);
   useEffect(() => {
     getData();
@@ -43,6 +45,8 @@ function ListMindMap({ user }) {
       user_id: user?.sub,
       user: user,
       title: 'Tiêu đề mindmap không tên',
+      title_seo: 'Tiêu đề mindmap không tên',
+      desc_seo: 'Chưa có mô tả',
       img_seo:
         'https://cdn5.mindmeister.com/assets/library/general/mm-logout-illustration_220727-f35a7063c1cb3191481037c2e66edc4999ec2e6e83f4b4f15c3af6ca43753682.png',
       status: 0,
